@@ -30,6 +30,9 @@ def predict():
     try:
         data = request.get_json()
         print("📥 Datos recibidos en Flask /predict:", data)
+        print("🧾 Tipos recibidos:")
+        for k, v in data.items():
+            print(f" - {k}: {v} ({type(v)})")
 
         for col in COLUMNAS_MODELO:
             if col not in data:
@@ -84,7 +87,7 @@ def recommend():
         if not conteo_categorias:
             return jsonify({'recommendations': ['No se encontró una recomendación clara']}), 200
 
-        top_recomendaciones = [cat for cat, _ in conteo_categorias.most_common(3)]
+        top_recomendaciones = [cat for cat, _ in conteo_categorias.most_common(1)]
         return jsonify({'recommendations': top_recomendaciones})
 
     except Exception as e:
