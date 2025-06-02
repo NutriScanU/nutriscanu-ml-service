@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
@@ -102,7 +102,6 @@ def ping():
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
-=======
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
@@ -203,4 +202,4 @@ def ping():
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
->>>>>>> 9c7085fbee8bceb80893744e1dbdba5fe84d167f
+
