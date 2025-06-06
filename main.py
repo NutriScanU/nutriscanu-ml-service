@@ -31,14 +31,13 @@ def predict():
     try:
         data = request.get_json()
         print("📥 Datos recibidos en Flask /predict:", data)
-        print("🧾 Tipos recibidos:")
-        for k, v in data.items():
-            print(f" - {k}: {v} ({type(v)})")
 
+        # Verifica que estén todas las columnas esperadas
         for col in COLUMNAS_MODELO:
             if col not in data:
                 return jsonify({"error": f"Falta el campo: {col}"}), 400
 
+        # Crear DataFrame para el modelo
         row = {
             'age': float(data['age']),
             'gender': data['gender'],
@@ -56,14 +55,29 @@ def predict():
         df = pd.DataFrame([row])
         print("🔎 DataFrame limpio listo para predecir:\n", df)
 
+        # Obtener predicción y probabilidades
+        probas = modelo_ml.predict_proba(df)[0]
         pred = modelo_ml.predict(df)[0]
         condicion = CLASES[pred]
 
-        return jsonify({'condition': condicion})
+        # Redondear a 2 decimales y convertir a porcentaje
+        probabilidades = {
+            CLASES[i]: round(float(prob) * 100, 2)  # ✅ conversión explícita
+            for i, prob in enumerate(probas)
+        }
+
+
+        print(f"📊 Resultado: {condicion} con probabilidades: {probabilidades}")
+
+        return jsonify({
+            'condition': condicion,
+            'probabilities': probabilidades
+        })
 
     except Exception as e:
         print("❌ ERROR EN FLASK /predict:", str(e))
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/recommend', methods=['POST'])
 def recommend():
