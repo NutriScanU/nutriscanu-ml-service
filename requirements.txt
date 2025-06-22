@@ -1,10 +1,7 @@
-
 flask
-scikit-learn
+flask_cors
+scikit-learn==1.6.1
 xgboost
 networkx
-flask
-scikit-learn
-xgboost
-networkx
-
+pandas
+joblib
