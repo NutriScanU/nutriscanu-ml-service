@@ -7,10 +7,9 @@ import pandas as pd
 from collections import Counter  # 💥 IMPORTANTE para /recommend
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": [
-    # "http://localhost:3000",  # Para desarrollo local
-    # "https://nutriscanu-frontend-h0b6gva8dccpaghx.brazilsouth-01.azurewebsites.net",  # Para el frontend en Azure
-]}})
+CORS(app, resources={r"/*": {"origins": [
+    "https://nutriscanu-frontend-v2-f6cghrgghtfgdqah.brazilsouth-01.azurewebsites.net"
+]}}, supports_credentials=True)
 
 
 # Cargar el modelo ML con pipeline incluido
